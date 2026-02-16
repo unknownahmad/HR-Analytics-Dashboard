@@ -22,4 +22,12 @@ while True:
         for emp in employees:
             print(f"- {emp['name']} ({emp['department']}): ${emp['salary']}")
     
+    elif choice=="2":
+        n=input("Name: ")
+        d=input("Department: ")
+        s=int(input("Salary (numbers only): "))
+        new_emp={"name": n,"department": d,"salary": s}
+        employees.append(new_emp)
+        print("Employee added!")
+    
     break
