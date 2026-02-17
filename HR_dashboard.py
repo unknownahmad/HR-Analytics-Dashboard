@@ -12,7 +12,7 @@ while True:
     print("1. View All Employees")
     print("2. Add New Employee")
     print("3. Remove Employee")
-    print("4. Department Statistics (Avg Salary)")
+    print("4. Company Average")
     print("5. Exit")
         
     choice=input("\n"+"Select an option (1-5): ")
@@ -29,5 +29,17 @@ while True:
         new_emp={"name": n,"department": d,"salary": s}
         employees.append(new_emp)
         print("Employee added!")
+        
+    elif choice=="3":
+        name_to_remove=input("Enter name to remove: ")
+        found=False
+        for i in range(len(employees)):
+            if employees[i]["name"].lower()==name_to_remove.lower():
+                employees.pop(i)
+                print("Removed successfully.")
+                found=True
+                break
+        if not found:
+            print("Name not found.")
     
     break
