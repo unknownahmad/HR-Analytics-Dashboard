@@ -12,7 +12,7 @@ The goal of this project is to manage a small database of employees using core P
 - **Data Aggregation**: Calculate real-time company-wide average salary statistics.
 
 ## 📋 Requirements & Constraints
-To demonstrate a deep understanding of Python logic, this project adheres to the following strict academic restrictions: [cite: 4]
+To demonstrate a deep understanding of Python logic, this project adheres to the following strict academic restrictions:
 - **No User-Defined Functions**: All logic is handled within a single main execution loop.
 - **Manual Data Handling**: Sorting and searching are built "by hand" using loops and conditionals rather than built-in methods where possible.
 - **Data Structures**: Centralized use of **Lists** for record sequences and **Dictionaries** for key-value attribute mapping.
