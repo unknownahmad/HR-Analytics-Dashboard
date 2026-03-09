@@ -1,10 +1,10 @@
 #list of employees dictionaries
 #each employee is represented as a dictionary with name, department and salary
 employees = [
-    {"name": "John", "department": "Sales", "salary": 50000},
-    {"name": "Alice", "department": "IT", "salary": 60000},
-    {"name": "Bob", "department": "HR", "salary": 45000},
-    {"name": "Sarah", "department": "IT", "salary": 75000}
+    {"name": "John", "department": ["Sales"], "salary": 50000},
+    {"name": "Alice", "department": ["IT","Support"], "salary": 60000},
+    {"name": "Bob", "department": ["HR"], "salary": 45000},
+    {"name": "Sarah", "department": ["IT"], "salary": 75000}
 ]
 #main programe loop
 while True:
@@ -24,19 +24,26 @@ while True:
         print("\nAll Employees:")
         #loop thru the employees and print their info
         for emp in employees:
-            print(f"- {emp['name']} ({emp['department']}): ${emp['salary']}")
+            dept_str = ", ".join(emp['department'])
+            print(f"- {emp['name']} ({dept_str}): ${emp['salary']}")
     
-    elif choice=="2":
+    ##
+    elif choice == "2":
         #get new details
-        n=input("Name: ")
-        d=input("Department: ")
-        s=int(input("Salary (numbers only): "))
+        n = input("Name: ")
+        num_depts = int(input("how many departement?: "))
+        d = []
+        for i in range(num_depts):
+            dept_name = input(f"enter department: ")
+            d.append(dept_name)
+            
+        s = int(input("Salary (numbers only): "))
         #create new dict
-        new_emp={"name": n,"department": d,"salary": s}
+        new_emp = {"name": n, "department": d, "salary": s}
         #add it the the list and voilaaaa
         employees.append(new_emp)
         print("Employee added!")
-        
+    ##
     elif choice=="3":
         name_to_remove=input("Enter name to remove: ")
         #set a boolian so we can track if the employee was found and deleted
