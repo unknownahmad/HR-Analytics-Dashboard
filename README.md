@@ -1,18 +1,20 @@
-# HR Analytics Dashboard
+# HR Analytics Dashboard & Data Pipeline
 
-A minimalist Python terminal application designed for "People Analytics" and employee management. This project was built as part of **Project Week III** at Harbour.Space University.
+A professional-grade "People Analytics" and employee management system. This project demonstrates foundational data science programming by implementing a fully decoupled architecture for data storage, mathematical aggregation, and user interfaces.
 
-## 🎯 Project Overview
-The goal of this project is to manage a small database of employees using core Python data structures without the use of functions or external libraries. It demonstrates "Full-Stack Data" logic by implementing a manual query engine for a list of dictionaries.
+## 🏗️ Architecture
 
-## 🛠 Features
-- **Data Visualization**: View a formatted list of all current employees.
-- **Data Entry**: Add new employees with specific attributes (Name, Department, Salary).
-- **Data Mutation**: Remove employees from the database by name using search logic.
-- **Data Aggregation**: Calculate real-time company-wide average salary statistics.
+The system replaces a monolithic script with a modular pipeline:
+* **`data_handler.py`**: Manages persistent file I/O operations with CSV formatting.
+* **`analytics.py`**: The mathematical engine handling Pandas-style grouping, filtering, and predictive budget simulations.
+* **`gui.py`**: A modern desktop dashboard built with `CustomTkinter` for real-time statistical tracking.
+* **`main.py`**: A robust command-line interface utilizing `tabulate` for structured data visualization.
 
-## 📋 Requirements & Constraints
-To demonstrate a deep understanding of Python logic, this project adheres to the following strict academic restrictions:
-- **No User-Defined Functions**: All logic is handled within a single main execution loop.
-- **Manual Data Handling**: Sorting and searching are built "by hand" using loops and conditionals rather than built-in methods where possible.
-- **Data Structures**: Centralized use of **Lists** for record sequences and **Dictionaries** for key-value attribute mapping.
+## 🛠️ Features
+
+* **Complete CRUD Operations**: Create, read, update, and delete employee records with strict data validation.
+* **Statistical Aggregation**: Automatically calculates global and department-specific statistics, including Minimum, Maximum, Average, and Median salaries.
+* **Predictive Modeling**: Simulates company-wide percentage raises to project total budget impacts.
+* **Automated Reporting**: Exports actionable text-based HR summaries.
+* **Dual Interfaces**: Operate the pipeline through a lightweight terminal CLI or a dark-mode graphical desktop application.
+
