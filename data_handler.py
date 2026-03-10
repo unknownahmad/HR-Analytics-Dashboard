@@ -36,3 +36,7 @@ def save_data(employees):
         
         for emp in employees:
             writer.writerow(emp)
+
+def export_report(report_text):
+    with open("department_report.txt", mode='w', encoding='utf-8') as file_object:
+        file_object.write(report_text)
