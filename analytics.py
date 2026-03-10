@@ -130,3 +130,21 @@ def update_employee_salary(employees, target_name, new_salary):
         updated_list.append(emp)
         
     return updated_list
+
+def simulate_raise(employees, percentage_increase):
+    total_employees = len(employees)
+    
+    if total_employees == 0:
+        return 0.0, 0.0
+        
+    new_total_payroll = 0.0
+    multiplier = 1 + (percentage_increase / 100)
+    
+    for emp in employees:
+        current_salary = float(emp['salary'])
+        new_salary = current_salary * multiplier
+        new_total_payroll = new_total_payroll + new_salary
+        
+    new_average = new_total_payroll / total_employees
+    
+    return new_total_payroll, new_average

@@ -5,7 +5,6 @@ from tabulate import tabulate
 def get_valid_salary():
     while True:
         salary_input = input("Enter salary: ")
-        
         is_digit = salary_input.isdigit()
         
         if is_digit == True:
@@ -38,11 +37,8 @@ def view_employees(employees):
 
 def delete_employee(employees):
     name_to_remove = input("Enter the full name of the employee to delete: ")
-    
     count_before = len(employees)
-    
     updated_list = analytics.remove_employee_by_name(employees, name_to_remove)
-    
     count_after = len(updated_list)
     
     if count_after < count_before:
@@ -55,15 +51,10 @@ def delete_employee(employees):
 
 def edit_employee_salary(employees):
     name_to_find = input("Enter the full name of the employee to edit: ")
-    
     employee_exists = False
     
     for emp in employees:
-        current_name = emp['name']
-        current_name_lower = current_name.lower()
-        search_name_lower = name_to_find.lower()
-        
-        if current_name_lower == search_name_lower:
+        if emp['name'].lower() == name_to_find.lower():
             employee_exists = True
             
     if employee_exists == False:
@@ -71,13 +62,32 @@ def edit_employee_salary(employees):
         return employees
         
     new_salary_value = get_valid_salary()
-    
     updated_list = analytics.update_employee_salary(employees, name_to_find, new_salary_value)
-    
     data_handler.save_data(updated_list)
-    
     print("Salary updated and saved to file.")
     return updated_list
+
+def run_raise_simulation(employees):
+    percent_input = input("Enter the percentage increase (e.g., 5 for 5%): ")
+    
+    is_valid = percent_input.replace('.', '', 1).isdigit()
+    
+    if is_valid == False:
+        print("Please enter a valid number.")
+        return
+        
+    percent_float = float(percent_input)
+    new_total, new_avg = analytics.simulate_raise(employees, percent_float)
+    
+    stats = analytics.calculate_global_stats(employees)
+    old_total = stats["total"]
+    difference = new_total - old_total
+    
+    print(f"\n--- Raise Simulation ({percent_input}%) ---")
+    print(f"Current Total Payroll: ${old_total:,.2f}")
+    print(f"New Total Payroll:     ${new_total:,.2f}")
+    print(f"Total Budget Increase: ${difference:,.2f}")
+    print(f"New Average Salary:    ${new_avg:,.2f}")
 
 def display_menu():
     print("\n--- HR Analytics Dashboard ---")
@@ -88,64 +98,49 @@ def display_menu():
     print("5. Export Analysis Report")
     print("6. Delete Employee")
     print("7. Edit Employee Salary")
-    print("8. Exit")
+    print("8. Simulate Company-Wide Raise")
+    print("9. Exit")
 
 def main():
     employees = data_handler.load_data()
     
     while True:
         display_menu()
-        choice = input("Select an option (1-8): ")
+        choice = input("Select an option (1-9): ")
         
         if choice == "1":
             view_employees(employees)
-            
         elif choice == "2":
             name = input("Enter name: ")
             dept = input("Enter department: ")
             sal = get_valid_salary()
-            
-            new_emp = {}
-            new_emp["name"] = name
-            new_emp["department"] = dept
-            new_emp["salary"] = sal
-            
+            new_emp = {"name": name, "department": dept, "salary": sal}
             employees.append(new_emp)
             data_handler.save_data(employees)
-            print("Employee added.")
-            
         elif choice == "3":
             stats = analytics.calculate_global_stats(employees)
-            print("\n--- Salary Stats ---")
-            print(f"Average: ${stats['avg']:,.2f}")
-            print(f"Median:  ${stats['median']:,.2f}")
-            print(f"Range:   ${stats['min']:,.0f} - ${stats['max']:,.0f}")
-            
+            print(f"\nAvg: ${stats['avg']:,.2f} | Median: ${stats['median']:,.2f}")
+            print(f"Range: ${stats['min']:,.0f} - ${stats['max']:,.0f}")
         elif choice == "4":
-            target = input("Department name: ")
+            target = input("Department: ")
             filtered = analytics.filter_by_dept(employees, target)
             view_employees(filtered)
-            
         elif choice == "5":
             analysis = analytics.get_department_analysis(employees)
-            report_text = "HR SUMMARY REPORT\n"
-            report_text = report_text + "=================\n"
+            report = "HR REPORT\n=========\n"
             for d, data in analysis.items():
-                line = f"{d}: {data['count']} staff | Avg: ${data['avg']:,.2f}\n"
-                report_text = report_text + line
-            data_handler.export_report(report_text)
+                report += f"{d}: {data['count']} staff | Avg: ${data['avg']:,.2f}\n"
+            data_handler.export_report(report)
             print("Report saved.")
-            
         elif choice == "6":
             employees = delete_employee(employees)
-            
         elif choice == "7":
             employees = edit_employee_salary(employees)
-            
         elif choice == "8":
+            run_raise_simulation(employees)
+        elif choice == "9":
             print("Shutting down...")
             break
-            
         else:
             print("Invalid choice.")
 
