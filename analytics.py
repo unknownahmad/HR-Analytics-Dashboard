@@ -1,25 +1,60 @@
-def calculate_average_salary(employees):
-    if not employees:
-        return 0
-    total = sum(float(emp['salary']) for emp in employees)
-    return total / len(employees)
-
-def get_department_stats(employees):
-    stats = {}
+def calculate_global_stats(employees):
+    total_employees = len(employees)
+    
+    if total_employees == 0:
+        empty_stats = {}
+        empty_stats["count"] = 0
+        empty_stats["total"] = 0
+        empty_stats["avg"] = 0
+        return empty_stats
+    
+    total_salary = 0.0
     
     for emp in employees:
-        dept = emp['department']
-        sal = float(emp['salary'])
+        salary_string = emp['salary']
+        salary_float = float(salary_string)
+        total_salary = total_salary + salary_float
         
-        if dept not in stats:
-            stats[dept] = []
-        stats[dept].append(sal)
+    average_salary = total_salary / total_employees
     
-    averages = {}
-    for dept, salaries in stats.items():
-        averages[dept] = sum(salaries) / len(salaries)
-        
-    return averages
+    stats = {}
+    stats["count"] = total_employees
+    stats["total"] = total_salary
+    stats["avg"] = average_salary
+    
+    return stats
 
-def find_top_earners(employees, threshold=60000):
-    return [emp for emp in employees if float(emp['salary']) >= threshold]
+def get_department_analysis(employees):
+    dept_data = {}
+    
+    for emp in employees:
+        department_name = emp['department']
+        salary_string = emp['salary']
+        salary_float = float(salary_string)
+        
+        is_department_present = department_name in dept_data
+        
+        if is_department_present == False:
+            empty_salary_list = []
+            dept_data[department_name] = empty_salary_list
+            
+        dept_data[department_name].append(salary_float)
+    
+    analysis = {}
+    
+    for dept, salaries in dept_data.items():
+        total_department_salary = 0.0
+        
+        for sal in salaries:
+            total_department_salary = total_department_salary + sal
+            
+        headcount = len(salaries)
+        average_department_salary = total_department_salary / headcount
+        
+        department_stats = {}
+        department_stats["avg"] = average_department_salary
+        department_stats["count"] = headcount
+        
+        analysis[dept] = department_stats
+        
+    return analysis

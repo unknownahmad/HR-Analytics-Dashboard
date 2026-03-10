@@ -4,20 +4,35 @@ import os
 FILE_NAME = "employees.csv"
 
 def load_data():
-    if not os.path.exists(FILE_NAME):
-        return []
+    file_exists = os.path.exists(FILE_NAME)
     
-    with open(FILE_NAME, mode='r', newline='', encoding='utf-8') as f:
-        reader = csv.DictReader(f)
-        return list(reader)
+    if file_exists == False:
+        empty_list = []
+        return empty_list
+    
+    with open(FILE_NAME, mode='r', newline='', encoding='utf-8') as file_object:
+        reader = csv.DictReader(file_object)
+        
+        data_list = []
+        
+        for row in reader:
+            data_list.append(row)
+            
+        return data_list
 
 def save_data(employees):
-    if not employees:
-        return
-
-    headers = employees[0].keys()
+    length_of_data = len(employees)
     
-    with open(FILE_NAME, mode='w', newline='', encoding='utf-8') as f:
-        writer = csv.DictWriter(f, fieldnames=headers)
+    if length_of_data == 0:
+        return
+    
+    first_employee = employees[0]
+    headers = first_employee.keys()
+    
+    with open(FILE_NAME, mode='w', newline='', encoding='utf-8') as file_object:
+        writer = csv.DictWriter(file_object, fieldnames=headers)
+        
         writer.writeheader()
-        writer.writerows(employees)
+        
+        for emp in employees:
+            writer.writerow(emp)
