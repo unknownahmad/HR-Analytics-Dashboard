@@ -112,3 +112,21 @@ def remove_employee_by_name(employees, name_to_delete):
             updated_list.append(emp)
             
     return updated_list
+
+def update_employee_salary(employees, target_name, new_salary):
+    updated_list = []
+    
+    target_name_lower = target_name.lower()
+    
+    for emp in employees:
+        current_name = emp['name']
+        current_name_lower = current_name.lower()
+        
+        is_match = current_name_lower == target_name_lower
+        
+        if is_match == True:
+            emp['salary'] = new_salary
+            
+        updated_list.append(emp)
+        
+    return updated_list
