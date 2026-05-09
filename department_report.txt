@@ -1,0 +1,7 @@
+HR SUMMARY REPORT
+=================
+IT: 5 staff | Avg: $73,600.00
+Sales: 3 staff | Avg: $61,000.00
+HR: 3 staff | Avg: $57,000.00
+Engineering: 3 staff | Avg: $92,333.33
+Marketing: 2 staff | Avg: $63,500.00
